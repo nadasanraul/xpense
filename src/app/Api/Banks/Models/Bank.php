@@ -2,25 +2,36 @@
 
 namespace App\Api\Banks\Models;
 
-use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\BaseModel;
 
 /**
  * Class Bank
- * @property integer $id
  * @property string $uuid
  * @property string $name
  * @property string $description
- * @property Carbon $created_at
- * @property Carbon $updated_at
+ * @property string $country
  * @package App\Api\Banks\Models
  */
-class Bank extends Model
+class Bank extends BaseModel
 {
     /**
-     * The attributes hidden for serialization
+     * The attributes that the model can be sorted by
+     *
+     * @var array
+     */
+    protected $sortingFields = ['name'];
+
+    /**
+     * The attributes that can be used to search the model
+     *
+     * @var array
+     */
+    protected $searchFields = ['name', 'description'];
+
+    /**
+     * The attributes that the model can be filtered by
      *
      * @var string[]
      */
-    protected $hidden = ['id', 'created_at', 'updated_at'];
+    protected $filterFields = ['country'];
 }

@@ -11,5 +11,6 @@ $factory->define(Bank::class, function(Faker $faker) {
         'uuid' => Str::uuid(),
         'name' => $faker->word(),
         'description' => $faker->sentence(),
+        'country' => $faker->countryCode,
     ];
 });

@@ -4,6 +4,7 @@ namespace App\Api\Auth\Providers;
 
 use Laravel\Passport\Passport;
 use App\Api\Auth\Grants\SocialGrant;
+use Illuminate\Database\Eloquent\Factory;
 use Laravel\Passport\Bridge\UserRepository;
 use League\OAuth2\Server\AuthorizationServer;
 use Laravel\Passport\Bridge\RefreshTokenRepository;
@@ -15,6 +16,11 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
  */
 class AuthServiceProvider extends ServiceProvider
 {
+    /**
+     * Registering the application data
+     *
+     * @return void
+     */
     public function register()
     {
         // Register providers
@@ -30,6 +36,9 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
+        $this->registerConfig();
+        $this->registerFactories();
+        $this->loadMigrationsFrom(module_path('Auth', 'Database/Migrations'));
 
         Passport::tokensExpireIn(now()->addYear());
         Passport::refreshTokensExpireIn(now()->addYear()->addWeek());
@@ -38,6 +47,33 @@ class AuthServiceProvider extends ServiceProvider
             $this->makeSocialGrant(),
             Passport::tokensExpireIn()
         );
+    }
+
+    /**
+     * Register config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->publishes([
+            module_path('Auth', 'Config/config.php') => config_path('auth.php'),
+        ], 'config');
+        $this->mergeConfigFrom(
+            module_path('Auth', 'Config/config.php'), 'auth'
+        );
+    }
+
+    /**
+     * Register an additional directory of factories.
+     *
+     * @return void
+     */
+    public function registerFactories()
+    {
+        if (! app()->environment('production') && $this->app->runningInConsole()) {
+            app(Factory::class)->load(module_path('Auth', 'Database/factories'));
+        }
     }
 
     /**

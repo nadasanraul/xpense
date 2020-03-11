@@ -21,6 +21,7 @@ class CreateBanksTable extends Migration
             $table->uuid('uuid')->unique();
             $table->string('name');
             $table->text('description');
+            $table->string('country');
             $table->timestamps();
         });
     }
