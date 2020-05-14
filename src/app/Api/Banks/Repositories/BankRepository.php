@@ -3,15 +3,21 @@
 namespace App\Api\Banks\Repositories;
 
 use App\Api\Banks\Models\Bank;
+use App\Api\Core\Repositories\BaseRepository;
 
 /**
  * Class BankRepository
  * @package App\Api\Banks\Repositories
  */
-class BankRepository
+class BankRepository extends BaseRepository
 {
-    public static function collection(array $searchData = [])
+    /**
+     * BankRepository constructor.
+     *
+     * @param Bank $model
+     */
+    public function __construct(Bank $model)
     {
-        return Bank::searchOn($searchData)->get();
+        parent::__construct($model);
     }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Api\Banks\Models;
 
-use App\Models\BaseModel;
+use App\Api\Core\Models\BaseModel;
 
 /**
  * Class Bank
@@ -19,19 +19,12 @@ class Bank extends BaseModel
      *
      * @var array
      */
-    protected $sortingFields = ['name'];
+    protected $sortingFields = ['name', 'country'];
 
     /**
      * The attributes that can be used to search the model
      *
      * @var array
      */
-    protected $searchFields = ['name', 'description'];
-
-    /**
-     * The attributes that the model can be filtered by
-     *
-     * @var string[]
-     */
-    protected $filterFields = ['country'];
+    protected $searchFields = ['name', 'description', 'country'];
 }

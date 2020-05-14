@@ -2,8 +2,8 @@
 
 namespace App\Traits;
 
-use App\Models\BaseModel;
 use Illuminate\Support\Arr;
+use App\Api\Core\Models\BaseModel;
 use App\Exceptions\InvalidQueryParamException;
 
 /**
@@ -28,12 +28,24 @@ trait HasQueryString
                 return [$item => Arr::get($queryParams, 'q')];
             }, $model->getSearchFields()));
         } else {
-            $search = $queryParams;
+            $search = array_filter($queryParams, function ($item) use ($model) {
+                return $item !== 'sort';
+            }, ARRAY_FILTER_USE_KEY);
         }
 
-        $invalidParams = array_diff(array_keys($search), $model->getSearchFields());
+        if (isset($queryParams['sort'])) {
+            $sort = [];
+            foreach (explode(',', $queryParams['sort']) as $sortItem) {
+                list($column, $direction) = explode('--', $sortItem);
+                $sort[$column] = $direction;
+            }
+
+            $params['sort'] = $sort;
+        }
+
+        $invalidParams = array_diff(array_keys($search), array_merge($model->getSearchFields()));
         if (count($invalidParams) > 0) {
-            throw new InvalidQueryParamException('Invalid query params: ' . implode($invalidParams, ', '));
+            throw new InvalidQueryParamException('Invalid query params: ' . implode(', ', $invalidParams));
         }
 
         $params['search'] = $search;
