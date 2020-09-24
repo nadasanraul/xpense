@@ -37,4 +37,16 @@ abstract class BaseRepository
     {
         return $this->model->searchOn($searchData)->sortBy($sortData)->get();
     }
+
+    /**
+     * Gets a single resource
+     *
+     * @param string $uuid
+     *
+     * @return mixed
+     */
+    public function single(string $uuid)
+    {
+        return $this->model->where('uuid', $uuid)->first();
+    }
 }

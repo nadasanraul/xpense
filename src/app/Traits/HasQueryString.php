@@ -36,7 +36,7 @@ trait HasQueryString
         if (isset($queryParams['sort'])) {
             $sort = [];
             foreach (explode(',', $queryParams['sort']) as $sortItem) {
-                list($column, $direction) = explode('--', $sortItem);
+                list($column, $direction) = explode('+', $sortItem);
                 $sort[$column] = $direction;
             }
 

@@ -47,4 +47,15 @@ abstract class BaseController extends Controller
             return response()->json($e->getMessage(), 400);
         }
     }
+
+    public function single(string $uuid)
+    {
+        try {
+            $item = $this->repository->single($uuid);
+
+            return response()->json($item, 200);
+        } catch (Throwable $e) {
+            return response()->json($e->getMessage(), 400);
+        }
+    }
 }
