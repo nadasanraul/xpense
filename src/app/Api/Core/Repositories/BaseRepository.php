@@ -35,7 +35,7 @@ abstract class BaseRepository
      */
     public function collection(array $searchData = [], array $sortData = [])
     {
-        return $this->model->searchOn($searchData)->sortBy($sortData)->get();
+        return $this->model->searchOn($searchData)->sortBy($sortData)->paginate(10);
     }
 
     /**

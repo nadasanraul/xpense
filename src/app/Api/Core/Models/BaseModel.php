@@ -14,7 +14,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property Carbon $updated_at
  * @method searchOn(array $searchData)
  * @method sortBy(array $searchData)
- * @package App\Models
+ * @package App\Api\Core\Models
  */
 abstract class BaseModel extends Model
 {

@@ -3,6 +3,7 @@
 namespace App\Api\Banks\Http\Controllers;
 
 use App\Api\Banks\Models\Bank;
+use App\Api\Banks\Resources\BankResource;
 use App\Api\Banks\Repositories\BankRepository;
 use App\Api\Core\Http\Controllers\BaseController;
 
@@ -19,5 +20,6 @@ class BanksController extends BaseController
     {
         $this->model = resolve(Bank::class);
         $this->repository = resolve(BankRepository::class);
+        $this->resource = BankResource::class;
     }
 }

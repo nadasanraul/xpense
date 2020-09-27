@@ -28,6 +28,11 @@ abstract class BaseController extends Controller
     protected $repository;
 
     /**
+     * @var string
+     */
+    protected $resource;
+
+    /**
      * Getting a list of models
      *
      * @return \Illuminate\Http\JsonResponse
@@ -42,9 +47,13 @@ abstract class BaseController extends Controller
             $sortData = Arr::get($params, 'sort', []);
 
             $collection = $this->repository->collection($searchData, $sortData);
-            return response()->json($collection, 200);
+            return $this->resource::collection($collection);
         } catch (Throwable $e) {
-            return response()->json($e->getMessage(), 400);
+            return response()->json([
+                'm' => $e->getMessage(),
+                'l' => $e->getLine(),
+                'f' => $e->getFile(),
+            ], 400);
         }
     }
 
@@ -53,9 +62,13 @@ abstract class BaseController extends Controller
         try {
             $item = $this->repository->single($uuid);
 
-            return response()->json($item, 200);
+            return new $this->resource($item);
         } catch (Throwable $e) {
-            return response()->json($e->getMessage(), 400);
+            return response()->json([
+                'm' => $e->getMessage(),
+                'l' => $e->getLine(),
+                'f' => $e->getFile(),
+            ], 400);
         }
     }
 }
