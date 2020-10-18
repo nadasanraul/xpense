@@ -117,4 +117,38 @@ abstract class BaseController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Updating a model
+     *
+     * @param string $uuid
+     *
+     * @return \Illuminate\Http\JsonResponse|mixed
+     */
+    public function update(string $uuid)
+    {
+        try {
+            $data = request()->all();
+
+            $validator = Validator::make($data, $this->saveRules);
+            if ($validator->fails()) {
+                throw new InputValidatorException($validator->getMessageBag());
+            }
+
+            $item = $this->model->where('uuid', $uuid)->firstOrFail();
+            $item->update($data);
+
+            return new $this->resource($item);
+        } catch (InputValidatorException $e) {
+            return response()->json([
+                'errors' => $e->errors,
+            ], 400);
+        } catch (Throwable $e) {
+            return response()->json([
+                'm' => $e->getMessage(),
+                'l' => $e->getLine(),
+                'f' => $e->getFile(),
+            ], 400);
+        }
+    }
 }
