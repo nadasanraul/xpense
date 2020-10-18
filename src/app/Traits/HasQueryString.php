@@ -40,12 +40,17 @@ trait HasQueryString
                 $sort[$column] = $direction;
             }
 
+            $invalidParams = array_diff(array_keys($sort), array_merge($model->getSortingFields()));
+            if (count($invalidParams) > 0) {
+                throw new InvalidQueryParamException('Invalid sort params: ' . implode(', ', $invalidParams));
+            }
+
             $params['sort'] = $sort;
         }
 
         $invalidParams = array_diff(array_keys($search), array_merge($model->getSearchFields()));
         if (count($invalidParams) > 0) {
-            throw new InvalidQueryParamException('Invalid query params: ' . implode(', ', $invalidParams));
+            throw new InvalidQueryParamException('Invalid search params: ' . implode(', ', $invalidParams));
         }
 
         $params['search'] = $search;

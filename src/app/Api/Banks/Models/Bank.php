@@ -27,4 +27,11 @@ class Bank extends BaseModel
      * @var array
      */
     protected $searchFields = ['name', 'description', 'country'];
+
+    /**
+     * The attributes that can be mass assignable
+     *
+     * @var string[]
+     */
+    protected $fillable = ['uuid', 'name', 'description', 'country'];
 }

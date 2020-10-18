@@ -2,6 +2,7 @@
 
 namespace App\Api\Banks\Database\Seeders;
 
+use App\Api\Banks\Models\Bank;
 use Illuminate\Database\Seeder;
 
 /**
@@ -17,6 +18,7 @@ class BanksTableSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(BanksTableSeeder::class);
+        Bank::truncate();
+        factory(Bank::class, 20)->create();
     }
 }

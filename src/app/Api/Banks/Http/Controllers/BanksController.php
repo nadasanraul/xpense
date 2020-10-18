@@ -21,5 +21,10 @@ class BanksController extends BaseController
         $this->model = resolve(Bank::class);
         $this->repository = resolve(BankRepository::class);
         $this->resource = BankResource::class;
+        $this->saveRules = [
+            'name' => 'required|string|max:200',
+            'description' => 'required|string|max:1000',
+            'country' => 'required|string|min:2|max:2',
+        ];
     }
 }

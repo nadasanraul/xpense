@@ -34,9 +34,9 @@ class OAuthClientsTableSeeder extends Seeder
                 'id' => Str::uuid(),
                 'secret' => Str::random(32),
                 'name' => 'Oauth Client',
-                'domain' => 'http://localhost:8000',
-                'redirect' => 'http://localhost8000',
-                'cookie_domain' => 'http://localhost8000',
+                'domain' => 'http://xpense.athd.eu',
+                'redirect' => 'http://xpense.athd.eu',
+                'cookie_domain' => 'http://xpense.athd.eu',
                 'revoked' => 0,
             ]
         );

@@ -23,8 +23,7 @@ class BanksDatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Bank::truncate();
-        factory(Bank::class, 20)->create();
+        $this->call(BanksTableSeeder::class);
     }
 
     public function __destruct()

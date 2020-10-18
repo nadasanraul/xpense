@@ -3,9 +3,7 @@
 namespace App\Api\Banks\Tests\Feature;
 
 use Tests\TestCase;
-use App\Api\Auth\Models\User;
 use App\Api\Banks\Models\Bank;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 /**
@@ -16,23 +14,15 @@ class BanksTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected $user;
-
     protected $banks;
 
-    protected function setUp(): void
+    public function setUp(): void
     {
         parent::setUp();
-        $this->user = factory(User::class)->create();
-        $this->banks = factory(Bank::class, 20)->create();
+        factory(Bank::class, 20)->create();
     }
 
-    /**
-     * A basic feature test example.
-     *
-     * @return void
-     */
-    public function test_getting_a_collection_of_banks()
+    public function test_it_should_get_a_collection_of_banks()
     {
         $this->withoutExceptionHandling();
 
@@ -40,6 +30,12 @@ class BanksTest extends TestCase
         $response = $this->get('api/banks');
 
         $response->assertStatus(200)
-            ->assertJsonCount($this->banks->count());
+            ->assertJsonStructure([
+                'data' => [
+                    '*' => ['uuid', 'name', 'description', 'country'],
+                ],
+                'links' => ['first', 'last', 'prev', 'next'],
+                'meta' => ['current_page', 'from', 'last_page', 'to', 'path', 'per_page', 'total'],
+            ]);
     }
 }
