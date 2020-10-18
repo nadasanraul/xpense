@@ -18,4 +18,5 @@ Route::middleware('auth:api')->name('banks.')->prefix('banks')->group(function (
     Route::post('/', 'BanksController@create')->name('create');
     Route::get('/{uuid}', 'BanksController@single')->name('single');
     Route::put('/{uuid}', 'BanksController@update')->name('update');
+    Route::delete('/{uuid}', 'BanksController@delete')->name('update');
 });

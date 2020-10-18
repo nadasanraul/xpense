@@ -151,4 +151,26 @@ abstract class BaseController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Deleting a model
+     *
+     * @param string $uuid
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function delete(string $uuid)
+    {
+        try {
+            $this->model->where('uuid', $uuid)->delete();
+
+            return response()->json([], 204);
+        } catch (Throwable $e) {
+            return response()->json([
+                'm' => $e->getMessage(),
+                'l' => $e->getLine(),
+                'f' => $e->getFile(),
+            ], 400);
+        }
+    }
 }
