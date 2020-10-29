@@ -5,10 +5,10 @@ namespace App\Api\Banks\Resources;
 use Illuminate\Http\Resources\Json\Resource;
 
 /**
- * Class BankResource
+ * Class AccountResource
  * @package App\Api\Banks\Resources
  */
-class BankResource extends Resource
+class AccountResource extends Resource
 {
     /**
      * Transform the resource into an array.
@@ -22,7 +22,10 @@ class BankResource extends Resource
             'uuid' => $this->uuid,
             'name' => $this->name,
             'description' => $this->description,
-            'country' => $this->country,
+            'balance' => $this->balance,
+            'number' => $this->number,
+            'user' => $this->user,
+            'bank' => $this->bank,
         ];
     }
 }

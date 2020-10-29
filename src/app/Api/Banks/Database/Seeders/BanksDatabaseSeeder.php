@@ -24,6 +24,7 @@ class BanksDatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(BanksTableSeeder::class);
+        $this->call(AccountsTableSeeder::class);
     }
 
     public function __destruct()
