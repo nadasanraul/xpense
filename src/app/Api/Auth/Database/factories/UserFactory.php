@@ -4,7 +4,7 @@
 
 use Illuminate\Support\Str;
 use Faker\Generator as Faker;
-use App\Api\Auth\Models\User;
+use App\Api\Accounts\Models\User;
 use Illuminate\Database\Eloquent\Factory;
 
 $factory->define(User::class, function(Faker $faker) {

@@ -68,14 +68,12 @@ abstract class BaseController extends Controller
     /**
      * Getting a single model
      *
-     * @param string $uuid
-     *
      * @return \Illuminate\Http\JsonResponse|mixed
      */
-    public function single(string $uuid)
+    public function single()
     {
         try {
-            $item = $this->repository->single($uuid);
+            $item = $this->repository->single(request()->route()->parameter('uuid'));
 
             return new $this->resource($item);
         } catch (Throwable $e) {

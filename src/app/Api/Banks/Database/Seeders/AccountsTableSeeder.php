@@ -2,7 +2,7 @@
 
 namespace App\Api\Banks\Database\Seeders;
 
-use App\Api\Auth\Models\User;
+use App\Api\Accounts\Models\User;
 use App\Api\Banks\Models\Bank;
 use Illuminate\Database\Seeder;
 use App\Api\Banks\Models\Account;

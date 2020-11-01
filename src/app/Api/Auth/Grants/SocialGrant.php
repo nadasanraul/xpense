@@ -3,7 +3,7 @@
 namespace App\Api\Auth\Grants;
 
 use DateInterval;
-use App\Api\Auth\Models\User;
+use App\Api\Accounts\Models\User;
 use League\OAuth2\Server\RequestEvent;
 use Laravel\Socialite\Facades\Socialite;
 use Psr\Http\Message\ServerRequestInterface;

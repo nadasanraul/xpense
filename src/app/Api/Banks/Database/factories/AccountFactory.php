@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 use Faker\Generator as Faker;
 use App\Api\Banks\Models\Account;
 use App\Api\Banks\Models\Bank;
-use App\Api\Auth\Models\User;
+use App\Api\Accounts\Models\User;
 
 $factory->define(Account::class, function (Faker $faker) {
     return [

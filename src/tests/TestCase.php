@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use App\Api\Auth\Models\User;
+use App\Api\Accounts\Models\User;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 

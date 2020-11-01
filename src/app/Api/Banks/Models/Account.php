@@ -2,7 +2,7 @@
 
 namespace App\Api\Banks\Models;
 
-use App\Api\Auth\Models\User;
+use App\Api\Accounts\Models\User;
 use App\Api\Core\Models\BaseModel;
 
 /**

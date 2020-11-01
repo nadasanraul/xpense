@@ -2,7 +2,7 @@
 
 namespace App\Api\Auth\Database\Seeders;
 
-use App\Api\Auth\Models\User;
+use App\Api\Accounts\Models\User;
 use Illuminate\Database\Seeder;
 
 /**

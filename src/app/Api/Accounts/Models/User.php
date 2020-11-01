@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Auth\Models;
+namespace App\Api\Accounts\Models;
 
 use Carbon\Carbon;
 use Laravel\Passport\HasApiTokens;
