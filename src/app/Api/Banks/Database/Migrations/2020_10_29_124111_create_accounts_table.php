@@ -26,6 +26,16 @@ class CreateAccountsTable extends Migration
             $table->bigInteger('balance')->default(0);
             $table->string('number');
             $table->timestamps();
+
+            $table->foreign('bank_id')
+                ->references('id')
+                ->on('banks')
+                ->onDelete('cascade');
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

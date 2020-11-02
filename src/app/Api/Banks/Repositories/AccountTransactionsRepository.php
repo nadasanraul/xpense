@@ -3,29 +3,29 @@
 namespace App\Api\Banks\Repositories;
 
 use App\Api\Banks\Models\Account;
-use App\Api\Accounts\Models\User;
+use App\Api\Banks\Models\Transaction;
 use App\Api\Core\Repositories\BaseRepository;
 
 /**
- * Class UserAccountsRepository
+ * Class AccountTransactionsRepository
  * @package App\Api\Banks\Repositories
  */
-class UserAccountsRepository extends BaseRepository
+class AccountTransactionsRepository extends BaseRepository
 {
     /**
-     * @var User
+     * @var Account
      */
-    protected $user;
+    protected $account;
 
     /**
-     * UserAccountsRepository constructor.
+     * AccountTransactionsRepository constructor.
      *
-     * @param Account $model
+     * @param Transaction $model
      */
-    public function __construct(Account $model)
+    public function __construct(Transaction $model)
     {
-        $userUuid = !is_null(request()->route()) ? request()->route()->parameter('userUuid') : null;
-        $this->user = User::where('uuid', $userUuid)->first();
+        $accountUuid = !is_null(request()->route()) ? request()->route()->parameter('uuid') : null;
+        $this->account = Account::where('uuid', $accountUuid)->first();
         parent::__construct($model);
     }
 
@@ -39,7 +39,7 @@ class UserAccountsRepository extends BaseRepository
      */
     public function collection(array $searchData = [], array $sortData = [])
     {
-        $searchData['user_id'] = $this->user->id;
+        $searchData['account_id'] = $this->account->id;
         return parent::collection($searchData, $sortData);
     }
 
@@ -52,6 +52,6 @@ class UserAccountsRepository extends BaseRepository
      */
     public function single(string $uuid)
     {
-        return $this->model->where('uuid', $uuid)->where('user_id', $this->user->id)->first();
+        return $this->model->where('uuid', $uuid)->where('account_id', $this->account->id)->first();
     }
 }

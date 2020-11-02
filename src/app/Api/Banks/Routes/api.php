@@ -24,7 +24,17 @@ Route::middleware('auth:api')->name('banks.')->prefix('banks')->group(function (
 Route::middleware('auth:api')->name('accounts.')->prefix('accounts')->group(function () {
     Route::get('/', 'AccountsController@list')->name('list');
     Route::post('/', 'AccountsController@create')->name('create');
-    Route::get('/{uuid}', 'AccountsController@single')->name('single');
     Route::put('/{uuid}', 'AccountsController@update')->name('update');
     Route::delete('/{uuid}', 'AccountsController@delete')->name('update');
+
+    Route::name('single')->prefix('{uuid}')->group(function () {
+        Route::get('/', 'AccountsController@single');
+        Route::name('.transactions')->prefix('transactions')->group(function () {
+            Route::get('/', 'AccountTransactionsController@list')->name('.list');
+            Route::post('/', 'AccountTransactionsController@create')->name('.create');
+            Route::get('/{transactionUuid}', 'AccountTransactionsController@single')->name('.single');
+            Route::put('/{transactionUuid}', 'AccountTransactionsController@update')->name('.update');
+            Route::delete('/{transactionUuid}', 'AccountTransactionsController@delete')->name('.delete');
+        });
+    });
 });
