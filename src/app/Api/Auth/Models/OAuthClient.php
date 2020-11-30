@@ -2,13 +2,13 @@
 
 namespace App\Api\Auth\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Laravel\Passport\Client;
 
 /**
  * Class OAuthClient
  * @package App\Api\Auth\Models
  */
-class OAuthClient extends Model
+class OAuthClient extends Client
 {
     /**
      * Incrementing property for the primary key

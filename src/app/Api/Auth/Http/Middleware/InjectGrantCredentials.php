@@ -21,7 +21,7 @@ class InjectGrantCredentials
      */
     public function handle($request, Closure $next)
     {
-        if (in_array($request->get('grant_type'), ['social_grant', 'refresh_token'])) {
+        if (in_array($request->get('grant_type'), ['social_grant', 'refresh_token', 'password'])) {
             $origin = $request->hasHeader('Origin') ? $request->headers->get('Origin') : $request->getSchemeAndHttpHost();
 
             $client = OAuthClient::where('domain', $origin)->first();

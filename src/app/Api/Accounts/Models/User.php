@@ -33,4 +33,18 @@ class User extends Authenticatable
     protected $fillable = [
         'username', 'firstname', 'lastname', 'email',
     ];
+
+    /**
+     * Use Username to find user for Passport
+     *
+     * @param $username
+     *
+     * @return User | null
+     */
+    public function findForPassport($username)
+    {
+        return $this->where('username', $username)
+            ->orWhere('email', strtolower($username))
+            ->first();
+    }
 }
