@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateTransactionsTable
+ * Class CreateExpenseCategoriesTable
  */
-class CreateTransactionsTable extends Migration
+class CreateExpenseCategoriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,19 +16,16 @@ class CreateTransactionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('expense_categories', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('uuid')->unique();
-            $table->unsignedBigInteger('account_id');
-            $table->string('title');
-            $table->bigInteger('amount')->default(0);
-            $table->enum('type', ['add', 'sub'])->default('sub');
-            $table->timestamp('completed_at');
+            $table->unsignedBigInteger('user_id');
+            $table->string('name');
             $table->timestamps();
 
-            $table->foreign('account_id')
+            $table->foreign('user_id')
                 ->references('id')
-                ->on('accounts')
+                ->on('users')
                 ->onDelete('cascade');
         });
     }
@@ -40,6 +37,6 @@ class CreateTransactionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('expense_categories');
     }
 }
