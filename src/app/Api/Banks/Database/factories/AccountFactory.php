@@ -11,8 +11,8 @@ use App\Api\Accounts\Models\User;
 $factory->define(Account::class, function (Faker $faker) {
     return [
         'uuid' => Str::uuid(),
-        'bank_id' => factory(Bank::class)->create()->id,
-        'user_id' => factory(User::class)->create()->id,
+        'bank_id' => Bank::first()->id,
+        'user_id' => User::first()->id,
         'name' => $faker->word(),
         'description' => $faker->sentence(),
         'balance' => rand(-1000, 1000),

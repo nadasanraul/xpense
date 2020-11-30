@@ -6,6 +6,7 @@ use App\Api\Accounts\Models\User;
 use App\Api\Banks\Models\Bank;
 use Illuminate\Database\Seeder;
 use App\Api\Banks\Models\Account;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * Class AccountsTableSeeder
@@ -20,7 +21,10 @@ class AccountsTableSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
         Account::truncate();
+        Schema::enableForeignKeyConstraints();
+
         /** @var User $user */
         foreach (User::all() as $user) {
             /** @var Bank $bank */

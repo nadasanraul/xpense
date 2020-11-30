@@ -17,7 +17,7 @@ class AddExpenseCategoryIdToTransactionsTable extends Migration
     public function up()
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->unsignedBigInteger('expense_category_id');
+            $table->unsignedBigInteger('expense_category_id')->after('account_id');
 
             $table->foreign('expense_category_id')
                 ->references('id')
@@ -34,7 +34,7 @@ class AddExpenseCategoryIdToTransactionsTable extends Migration
     public function down()
     {
         Schema::table('transactions', function (Blueprint $table) {
-            $table->dropForeign('expense_category_id');
+            $table->dropForeign('transactions_expense_category_id_foreign');
             $table->dropColumn('expense_category_id');
         });
     }
