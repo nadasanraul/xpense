@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Accounts\Http\Controllers;
+namespace App\Api\Banks\Http\Controllers;
 
 use App\Api\Banks\Models\Account;
 use App\Api\Banks\Resources\UserAccountResource;

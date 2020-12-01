@@ -4,7 +4,8 @@ namespace App\Api\Accounts\Models;
 
 use Carbon\Carbon;
 use Laravel\Passport\HasApiTokens;
-use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Api\Core\Models\BaseModel;
+use Illuminate\Auth\Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 /**
@@ -21,9 +22,9 @@ use Illuminate\Notifications\Notifiable;
  * @property Carbon $updated_at
  * @package App\Api\Auth\Models
  */
-class User extends Authenticatable
+class User extends BaseModel
 {
-    use HasApiTokens, Notifiable;
+    use Authenticatable, HasApiTokens, Notifiable;
 
     /**
      * The attributes that are mass assignable.

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Api\Banks\Resources;
 
 use Illuminate\Http\Resources\Json\Resource;

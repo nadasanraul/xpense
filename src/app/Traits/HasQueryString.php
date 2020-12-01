@@ -29,7 +29,7 @@ trait HasQueryString
             }, $model->getSearchFields()));
         } else {
             $search = array_filter($queryParams, function ($item) use ($model) {
-                return $item !== 'sort';
+                return $item !== 'sort' && $item !== 'page';
             }, ARRAY_FILTER_USE_KEY);
         }
 
