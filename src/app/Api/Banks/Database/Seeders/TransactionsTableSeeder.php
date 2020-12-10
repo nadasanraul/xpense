@@ -21,7 +21,9 @@ class TransactionsTableSeeder extends Seeder
     {
         Transaction::truncate();
         foreach (Account::all() as $account) {
-            factory(Transaction::class, 30)->create(['account_id' => $account->id]);
+            foreach ($account->user->expenseCategories as $expenseCategory) {
+                factory(Transaction::class, 30)->create(['account_id' => $account->id, 'expense_category_id' => $expenseCategory->id]);
+            }
         }
     }
 }

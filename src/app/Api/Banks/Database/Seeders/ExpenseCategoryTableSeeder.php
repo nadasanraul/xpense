@@ -24,6 +24,7 @@ class ExpenseCategoryTableSeeder extends Seeder
         ExpenseCategory::truncate();
         Schema::enableForeignKeyConstraints();
 
+        /** @var User $user */
         foreach (User::all() as $user) {
             factory(ExpenseCategory::class, 5)->create(['user_id' => $user->id]);
         }

@@ -22,13 +22,14 @@ Route::middleware('auth:api')->name('banks.')->prefix('banks')->group(function (
 });
 
 Route::middleware('auth:api')->name('accounts.')->prefix('accounts')->group(function () {
-    Route::get('/', 'AccountsController@list')->name('list');
-    Route::post('/', 'AccountsController@create')->name('create');
-    Route::put('/{uuid}', 'AccountsController@update')->name('update');
-    Route::delete('/{uuid}', 'AccountsController@delete')->name('update');
+    // Keep out for now until adding user roles
+    // Route::get('/', 'AccountsController@list')->name('list');
+    // Route::post('/', 'AccountsController@create')->name('create');
+    // Route::put('/{uuid}', 'AccountsController@update')->name('update');
+    // Route::delete('/{uuid}', 'AccountsController@delete')->name('update');
 
     Route::name('single')->prefix('{uuid}')->group(function () {
-        Route::get('/', 'AccountsController@single');
+        // Route::get('/', 'AccountsController@single');
         Route::name('.transactions')->prefix('transactions')->group(function () {
             Route::get('/', 'AccountTransactionsController@list')->name('.list');
             Route::post('/', 'AccountTransactionsController@create')->name('.create');

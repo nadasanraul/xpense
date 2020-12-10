@@ -3,8 +3,10 @@
 namespace App\Api\Banks\Http\Controllers;
 
 use Throwable;
+use Illuminate\Http\Request;
 use App\Api\Banks\Models\Transaction;
 use App\Api\Core\Http\Controllers\BaseController;
+use App\Api\Core\Exceptions\ForbiddenAccessException;
 use App\Api\Banks\Resources\AccountTransactionResource;
 use App\Api\Banks\Repositories\AccountTransactionsRepository;
 
@@ -19,6 +21,24 @@ class AccountTransactionsController extends BaseController
      */
     public function __construct()
     {
+        $this->middleware(function (Request $request, $next) {
+            try {
+                $userAccounts = auth()->user()->accounts->pluck('uuid');
+                if (!$userAccounts->contains($request->route()->parameter('uuid'))) {
+                    throw new ForbiddenAccessException('Access to this resource is not permitted');
+                }
+
+                return $next($request);
+            }catch (ForbiddenAccessException $e) {
+                return response()->json([
+                    'message' => $e->getMessage(),
+                ], 403);
+            } catch (\Throwable $e) {
+                return response()->json([
+                    'message' => 'Something went wrong. Please try again',
+                ], 400);
+            }
+        });
         $this->model = resolve(Transaction::class);
         $this->repository = resolve(AccountTransactionsRepository::class);
         $this->resource = AccountTransactionResource::class;
