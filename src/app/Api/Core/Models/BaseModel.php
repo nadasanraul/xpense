@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Builder;
  * @property integer $id
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * @method searchOn(array $searchData)
+ * @method filterOn(array $searchData)
  * @method sortBy(array $searchData)
  * @package App\Api\Core\Models
  */
@@ -62,10 +62,36 @@ abstract class BaseModel extends Model
      *
      * @return void
      */
-    public function scopeSearchOn(Builder $query, array $searchData)
+    public function scopeFilterOn(Builder $query, array $searchData)
     {
         foreach ($searchData as $key => $data) {
-            $query->orWhere($key, 'LIKE', '%' . $data . '%');
+            if (gettype($data) === 'array') {
+                foreach ($data as $operator => $value) {
+                    switch ($operator) {
+                        case 'in':
+                            $query->whereIn($key, $value);
+                            break;
+                        case 'gte':
+                            $query->where($key, '>=', $value);
+                            break;
+                        case 'gt':
+                            $query->where($key, '>', $value);
+                            break;
+                        case 'lte':
+                            $query->where($key, '<=', $value);
+                            break;
+                        case 'lt':
+                            $query->where($key, '<' ,$value);
+                            break;
+                    }
+                }
+            } else {
+                if (is_null($data)) {
+                    $query->whereNull($key);
+                } else {
+                    $query->where($key, 'LIKE', '%' . $data . '%');
+                }
+            }
         }
     }
 

@@ -10,6 +10,7 @@ use Illuminate\Routing\Controller;
 use App\Api\Core\Models\BaseModel;
 use Illuminate\Support\Facades\Validator;
 use App\Api\Core\Repositories\BaseRepository;
+use App\Api\Core\Handlers\ListHandlerInterface;
 use App\Api\Core\Exceptions\InputValidatorException;
 
 /**
@@ -21,9 +22,9 @@ abstract class BaseController extends Controller
     use HasQueryString;
 
     /**
-     * @var BaseModel
+     * @var string
      */
-    protected $model;
+    protected $module;
 
     /**
      * @var BaseRepository
@@ -40,22 +41,34 @@ abstract class BaseController extends Controller
      */
     protected $saveRules;
 
+    protected $operations = [];
+
+    /**
+     * BaseController constructor.
+     */
+    public function __construct()
+    {
+        foreach ($this->operations as $operation) {
+            switch ($operation) {
+                case 'list':
+                    app()->bind(
+                        ListHandlerInterface::class,
+                        'App\\' . $this->module . '\Http\Resources' . $this->resource . 'ListHandler'
+                    );
+                    break;
+            }
+        }
+    }
+
     /**
      * Getting a list of models
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function list()
+    public function list(ListHandlerInterface $handler)
     {
         try {
-            $queryStringArray = request()->query();
-
-            $params = $this->parseQueryParams($queryStringArray, $this->model);
-            $searchData = Arr::get($params, 'search', []);
-            $sortData = Arr::get($params, 'sort', []);
-
-            $collection = $this->repository->collection($searchData, $sortData);
-            return $this->resource::collection($collection);
+            return $handler->list();
         } catch (Throwable $e) {
             return response()->json([
                 'm' => $e->getMessage(),
